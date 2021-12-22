@@ -1,0 +1,18 @@
+.default {
+  border: 1px blue solid;
+  border-radius: 10px;
+  padding: 4px;
+  margin-left: 4px;
+  margin-right: 4px;
+  display: inline-flex;
+  opacity: 0.9;
+  user-select: none;
+}
+
+.default:hover {
+  border-color: steelblue;
+}
+
+.disabled {
+  opacity: 0.2;
+}
