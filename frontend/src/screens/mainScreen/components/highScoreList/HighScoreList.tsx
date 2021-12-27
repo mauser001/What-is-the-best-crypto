@@ -21,7 +21,7 @@ const HighScoreList: FC<Props> = ({ property }) => {
             const clone = accounts.filter(account => account[property] !== '0');
             setSorted(clone.sort(sortAccountsBy(property)))
         }
-    }, [accounts]);
+    }, [accounts, property]);
 
     const showLabel = showHighscore ? '<- hide' : '-> show';
     const toggleShow = () => {

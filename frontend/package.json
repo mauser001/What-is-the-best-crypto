@@ -1,7 +1,8 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
+  "version": "1.0.0-RC.0001",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^5.14.1",

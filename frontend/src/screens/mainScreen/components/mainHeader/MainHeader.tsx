@@ -12,7 +12,7 @@ const MainHeader: FC<{}> = () => {
 
     useEffect(() => {
         dispatch(getTheBestCrypto());
-    }, [totalBurnedAmount]);
+    }, [totalBurnedAmount, dispatch]);
 
     useEffect(() => {
         if (theBestCrypto) {
@@ -22,7 +22,7 @@ const MainHeader: FC<{}> = () => {
 
     return (<div>
         <h1>The best Crypto is <RainbowText text={theBestCrypto || '???'} /></h1>
-        <h2>And we made <RainbowText text={formatWei(totalDonationAmount)} /> donations to <a href="https://www.sos-kinderdorf.at/" >SOS-Kinderdorf</a></h2>
+        <h2>And we made <RainbowText text={formatWei(totalDonationAmount)} /> donations to <a href="https://www.sos-kinderdorf.at/" target="_blank" rel="noreferrer">SOS-Kinderdorf</a></h2>
     </div>)
 }
 

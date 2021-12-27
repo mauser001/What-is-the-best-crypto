@@ -6,6 +6,8 @@ import { getAccounts, STATE } from "../../reducer/blockchainSlice";
 import { RootState } from "../../store/store";
 import BurnBox from "./components/burnBox.tsx/BurnBox";
 import DonationsBox from "./components/donationsBox/DonationsBox";
+import Footer from "./components/footer/Footer";
+import InfoBox from "./components/infoBox/InfoBox";
 import MainHeader from "./components/mainHeader/MainHeader";
 import RulesBox from "./components/rulesBox/RulesBox";
 
@@ -31,13 +33,18 @@ const MainScreen: FC<{}> = () => {
                 removeAllContractListeners();
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [networkState]);
 
     return (<div>
         <MainHeader />
         <DonationsBox />
         <BurnBox />
-        <RulesBox />
+        <div>
+            <RulesBox />
+            <InfoBox />
+        </div>
+        <Footer />
     </div>)
 }
 

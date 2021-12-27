@@ -51,6 +51,7 @@ const DonationsBox: FC<{}> = () => {
     return (<Box>
         {userAddress ? (
             <div>
+                <label>Donations</label>
                 <h3>{title} {formatWei(userAccount?.donations)}</h3>
                 <ErrorLabel errorText={error} />
                 <div>

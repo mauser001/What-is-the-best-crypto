@@ -56,6 +56,7 @@ const BurnBox: FC<{}> = () => {
     return (<Box>
         {userAddress ? (
             <div>
+                <label>Burned tokens</label>
                 <h3>{title}: {formatWei(userAccount?.burnedTokens)}</h3>
                 <h3>You have {formatWei(tokenBalance)} to burn</h3>
                 <ErrorLabel errorText={error} />

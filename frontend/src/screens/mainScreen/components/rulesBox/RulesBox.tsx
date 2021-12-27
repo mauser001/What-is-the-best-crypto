@@ -11,8 +11,8 @@ const RulesBox: FC<{}> = () => {
                 <li>All donations go directly to SOS-Kinderdorf</li>
                 <li>The donation address is: 0x74e525323217A4472D4db41A116e6Db067cF8b8a
                     <ul>
-                        <li><a href="https://www.sos-kinderdorf.at/campaign/cryptodonations">Link to donation site (the Ethereum address is also valid on Polygon)</a></li>
-                        <li><a href="https://polygonscan.com/address/0x74e525323217A4472D4db41A116e6Db067cF8b8a">View on polygonscan</a></li>
+                        <li><a href="https://www.sos-kinderdorf.at/campaign/cryptodonations" target="_blank" rel="noreferrer">Link to donation site (the Ethereum address is also valid on Polygon)</a></li>
+                        <li><a href="https://polygonscan.com/address/0x74e525323217A4472D4db41A116e6Db067cF8b8a" target="_blank" rel="noreferrer">View on polygonscan</a></li>
                     </ul>
                 </li>
                 <li>Donations are made in MATIC on the Polygon network</li>

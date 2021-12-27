@@ -1,0 +1,25 @@
+.footer {
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+}
+
+.linkIcon {
+  float: right;
+  opacity: 1;
+  opacity: 0.5;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+.linkIcon:hover {
+  opacity: 1;
+}
+
+.twitterIcon {
+  color: #1da1f2;
+  fill: currentColor;
+  opacity: 0.5;
+  width: 30px;
+  height: 30px;
+}

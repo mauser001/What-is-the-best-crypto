@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './App.css';
 import { useAppDispatch } from './hooks/hooks';
-import { BigNumber, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { getUserAccount, setState, STATE } from './reducer/blockchainSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
@@ -59,6 +59,7 @@ function App() {
       window.ethereum.removeListener('connect', checkProvider);
       window.ethereum.removeListener('accountsdisconnectChanged', setDisconnected);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
