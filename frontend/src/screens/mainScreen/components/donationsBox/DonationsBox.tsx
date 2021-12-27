@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Box from "../../../../components/box/Box";
 import CustomButton from "../../../../components/customButton/CustomButton";
@@ -19,6 +19,7 @@ const DonationsBox: FC<{}> = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const isHighestDoner = notEmptyOrNull(userAccount?.donations) && userAccount?.donations === highestDonationAmount;
+    const prevUserDonation = useRef('');
 
     useEffect(() => {
         setError('');
@@ -28,17 +29,28 @@ const DonationsBox: FC<{}> = () => {
         }
     }, [userAddress, accounts]);
 
+    useEffect(() => {
+        if (userAccount) {
+            if (userAccount.donations !== prevUserDonation.current) {
+                setIsLoading(false);
+                prevUserDonation.current = userAccount.donations;
+            }
+        }
+    }, [userAccount]);
+
     const donate = async () => {
         setError('');
         setIsLoading(true);
+        prevUserDonation.current = userAccount!.donations;
         const result = await dispatch(sendDonation(donationAmount, userAddress!));
         if (result !== true) {
-            setError(result)
+            setIsLoading(false);
+            setError(result);
         }
-        setIsLoading(false);
     }
 
     const donationEnabled = !!userAddress && donationAmount > 0 && !isLoading;
+    const buttonLabel = isLoading ? '... loading' : 'Donate';
 
     const donationAmountChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = parseInt(event.target.value);
@@ -54,10 +66,14 @@ const DonationsBox: FC<{}> = () => {
                 <label>Donations</label>
                 <h3>{title} {formatWei(userAccount?.donations)}</h3>
                 <ErrorLabel errorText={error} />
-                <div>
-                    <input type={'number'} value={donationAmount} onChange={donationAmountChanged} />
-                    <CustomButton enabled={donationEnabled} label="Donate" onClick={donate} />
-                </div>
+                {
+                    !isLoading ?
+                        <div>
+                            <input type={'number'} value={donationAmount} onChange={donationAmountChanged} />
+                            <CustomButton enabled={donationEnabled} label={buttonLabel} onClick={donate} />
+                        </div> :
+                        <div>... processing ...</div>
+                }
             </div>
         ) : (<div>No account connected</div>)}
         <HighScoreList property="donations" />
