@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Box from "../../../../components/box/Box";
 import CustomButton from "../../../../components/customButton/CustomButton";
@@ -20,6 +20,7 @@ const BurnBox: FC<{}> = () => {
     const [newBest, setNewBest] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
+    const prevUserBurn = useRef('');
 
     let burnEnabled = false, willBeHighestBurner = false, isHighestBurner = false;
     if (!!userAddress && notEmptyOrNull(tokenBalance) && userAccount && highestBurnedAmount) {
@@ -35,16 +36,25 @@ const BurnBox: FC<{}> = () => {
             setUserAccount(found);
             dispatch(getTokenBalance(userAddress));
         }
-    }, [userAddress, accounts])
+    }, [userAddress, accounts]);
+
+    useEffect(() => {
+        if (userAccount) {
+            if (userAccount.burnedTokens !== prevUserBurn.current) {
+                setIsLoading(false);
+                prevUserBurn.current = userAccount.burnedTokens;
+            }
+        }
+    }, [userAccount]);
 
     const burn = async () => {
         setError('');
         setIsLoading(true);
         const result = await dispatch(burnTokens(tokenBalance!, willBeHighestBurner ? newBest : (theBestCrypto || ''), userAddress!));
         if (result !== true) {
-            setError(result)
+            setError(result);
+            setIsLoading(false);
         }
-        setIsLoading(false);
     }
 
     const newBestChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,23 +70,27 @@ const BurnBox: FC<{}> = () => {
                 <h3>{title}: {formatWei(userAccount?.burnedTokens)}</h3>
                 <h3>You have {formatWei(tokenBalance)} to burn</h3>
                 <ErrorLabel errorText={error} />
-                <div>
-                    {willBeHighestBurner &&
-                        <div className={style.inputBox}>
-                            <span>The best crypto is: </span>
-                            <input
-                                type={'text'}
-                                maxLength={10}
-                                value={newBest}
-                                onChange={newBestChanged} />
-                        </div>
-                    }
-                    <CustomButton
-                        enabled={burnEnabled}
-                        label="Burn my tokens"
-                        onClick={burn}
-                    />
-                </div>
+                {
+                    !isLoading ?
+                        <div>
+                            {willBeHighestBurner &&
+                                <div className={style.inputBox}>
+                                    <span>The best crypto is: </span>
+                                    <input
+                                        type={'text'}
+                                        maxLength={10}
+                                        value={newBest}
+                                        onChange={newBestChanged} />
+                                </div>
+                            }
+                            <CustomButton
+                                enabled={burnEnabled}
+                                label="Burn my tokens"
+                                onClick={burn}
+                            />
+                        </div> :
+                        <div>... processing ...</div>
+                }
             </div>
         ) : (<div>No account connected</div>)}
         <HighScoreList property="burnedTokens" />
