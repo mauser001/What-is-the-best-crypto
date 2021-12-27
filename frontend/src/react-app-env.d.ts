@@ -2,4 +2,5 @@
 interface Window {
     ethereum: any;
     title: any;
+    initApp: any;
 }
